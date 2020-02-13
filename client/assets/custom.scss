@@ -1,0 +1,30 @@
+$mainColor: whitesmoke;
+
+body {
+  font-family: Inter,-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  margin: 0;
+}
+
+.navbar {
+  height: 5em;
+  background-color: $mainColor;
+  img {
+    height: 100%
+  }
+}
+
+.content {
+  padding: 10px;
+  min-height: calc(100vh - 10em);
+  display: flex;
+  flex-direction: column;
+}
+
+.footer {
+  height: 5em;
+  background-color: $mainColor;
+  img {
+    height: 100%;
+    float: right
+  }
+}

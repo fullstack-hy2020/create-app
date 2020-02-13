@@ -1,0 +1,24 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "semi": [
+      "error",
+      "never"
+    ],
+    "max-len": [1, 200],
+    "no-shadow": 0,
+    "no-plusplus": 0,
+    "import/no-unresolved": "off",
+    "react/jsx-filename-extension": "off",
+    "react/prop-types": [
+      1,
+      {
+        "skipUndeclared": true
+      }
+    ]
+  }
+}
