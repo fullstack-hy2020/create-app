@@ -72,5 +72,8 @@ module.exports = (env, argv) => {
       }),
       ...additionalPlugins,
     ],
+    output: {
+      publicPath: '/'
+    }
   }
 }

@@ -34,11 +34,12 @@ if (!inProduction) {
   const hotMiddleWare = require('webpack-hot-middleware')
   const webpackConf = require('@root/webpack.config')
   /* eslint-enable */
-  const compiler = webpack(webpackConf('development', { mode: 'development' }))
+  const config = webpackConf('development', { mode: 'development' })
+  const compiler = webpack(config)
 
   const devMiddleware = middleware(compiler)
   app.use(devMiddleware)
-  app.use(hotMiddleWare(compiler))
+  app.use(hotMiddleWare(compiler, { publicPath: config.output.publicPath }))
   app.use('*', (req, res, next) => {
     const filename = path.join(compiler.outputPath, 'index.html')
     devMiddleware.waitUntilValid(() => {
