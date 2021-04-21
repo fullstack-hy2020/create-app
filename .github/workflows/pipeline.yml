@@ -14,22 +14,22 @@ jobs:
     steps:
       - name: Copy code
         uses: actions/checkout@v2
-      - name: Install node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-      - name: npm install
-        run: npm install
-      - name: lint
-        run: npm run lint
-      - name: build
-        run: npm run build
-      - name: tests
-        uses: cypress-io/github-action@v2
-        with:
-          start: npm start
-          command: npm run test:e2e
-          wait-on: http://localhost:8000/
+      # - name: Install node
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: '12.x'
+      # - name: npm install
+      #   run: npm install
+      # - name: lint
+      #   run: npm run lint
+      # - name: build
+      #   run: npm run build
+      # - name: tests
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     start: npm start
+      #     command: npm run test:e2e
+      #     wait-on: http://localhost:8000/
       - name: Notify slack to peer review
         if: ${{ github.event_name != 'push' && success() && !contains(toJson(github.event.commits[0].message), '#skip') }}
         uses: 8398a7/action-slack@v3
