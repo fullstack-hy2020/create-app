@@ -1,9 +1,6 @@
 name: Pipeline
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches: [master]
     types: [opened, synchronize]
@@ -14,24 +11,24 @@ jobs:
     steps:
       - name: Copy code
         uses: actions/checkout@v2
-      # - name: Install node
-      #   uses: actions/setup-node@v1
-      #   with:
-      #     node-version: '12.x'
-      # - name: npm install
-      #   run: npm install
-      # - name: lint
-      #   run: npm run lint
-      # - name: build
-      #   run: npm run build
-      # - name: tests
-      #   uses: cypress-io/github-action@v2
-      #   with:
-      #     start: npm start
-      #     command: npm run test:e2e
-      #     wait-on: http://localhost:8000/
+      - name: Install node
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: npm install
+        run: npm install
+      - name: lint
+        run: npm run lint
+      - name: build
+        run: npm run build
+      - name: tests
+        uses: cypress-io/github-action@v2
+        with:
+          start: npm start
+          command: npm run test:e2e
+          wait-on: http://localhost:8000/
       - name: Notify slack to peer review
-        if: ${{ github.event_name != 'push' && success() }}
+        if: ${{ github.event_name != 'push' && success() && !contains(toJson(github.event.commits[0].message), '#skip') }}
         uses: 8398a7/action-slack@v3
         with:
           status: custom
@@ -40,14 +37,13 @@ jobs:
             {
               attachments: [{
                 color: 'warning',
-                text: `!!!TEST!!!\n${process.env.AS_REPO} (${process.env.AS_COMMIT})\nAwaiting peer review for merge.`,
+                text: `@mluukkai\n${process.env.AS_REPO} (${process.env.AS_COMMIT})\nAwaiting peer review for merge.`,
               }]
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          # @mluukkai
       - name: Update version
-        if: ${{ github.event_name == 'push' && success() && !contains(toJson(github.event.commits[0].message), '#skip') }}
+        if: ${{ github.event_name == 'push' && success() && !contains(toJson(github.event.commits[0].message), '#skipp') }}
         uses: anothrNick/github-tag-action@eca2b69f9e2c24be7decccd0f15fdb1ea5906598
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
