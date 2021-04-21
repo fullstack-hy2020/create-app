@@ -45,7 +45,7 @@ jobs:
             }
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          # @mluukkai
+          # @mluukkai 
       - name: Update version
         if: ${{ github.event_name == 'push' && success() && !contains(toJson(github.event.commits[0].message), '#skip') }}
         uses: anothrNick/github-tag-action@eca2b69f9e2c24be7decccd0f15fdb1ea5906598
