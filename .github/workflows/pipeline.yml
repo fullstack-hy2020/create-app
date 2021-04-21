@@ -12,8 +12,8 @@ jobs:
   simple_pipeline:
     runs-on: ubuntu-18.04
     steps:
-      # - name: Copy code
-      #   uses: actions/checkout@v2
+      - name: Copy code
+        uses: actions/checkout@v2
       # - name: Install node
       #   uses: actions/setup-node@v1
       #   with:
