@@ -53,7 +53,7 @@ jobs:
           severity: info
           color: '#00ff00'
           description: "to https://fullstack11repo2liam.herokuapp.com by LiamLi :)"
-          text: A new version of Pokedex deployed
+          text: For exercise 11.20
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
       - name: Build Failure
         uses: rjstone/discord-webhook-notify@v1.0.4
