@@ -46,22 +46,22 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
-      #- name: Build Success
-      #  uses: rjstone/discord-webhook-notify@v1
-      #  if: success()
-      #  with: 
-      #    severity: info
-      #    color: '#00ff00'
-      #    description: "to https://fullstack11liam.herokuapp.com by LiamLi :)"
-      #    text: A new version of Pokedex deployed
-      #    webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-      #- name: Build Failure
-      #  uses: rjstone/discord-webhook-notify@v1.0.4
-      #  if: ${{ failure() }}
-      #  with:
-      #    severity: error
-      #    color: '#ff0000'
-      #    description: commit
-      #    details: "${{github.server_url}}/${{github.repository}}/commit/${{github.sha}} by LiamLi broke the build :("
-      #    text: Build failed
-      #    webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Build Success
+        uses: rjstone/discord-webhook-notify@v1
+        if: success()
+        with: 
+          severity: info
+          color: '#00ff00'
+          description: "to https://fullstack11repo2liam.herokuapp.com by LiamLi :)"
+          text: A new version of Pokedex deployed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Build Failure
+        uses: rjstone/discord-webhook-notify@v1.0.4
+        if: ${{ failure() }}
+        with:
+          severity: error
+          color: '#ff0000'
+          description: commit
+          details: "${{github.server_url}}/${{github.repository}}/commit/${{github.sha}} by LiamLi broke the build :("
+          text: Build failed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
