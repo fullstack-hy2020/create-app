@@ -1,0 +1,52 @@
+name: Deployment pipeline
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches: [master]
+    types: [opened, synchronize]
+      
+jobs:
+  deployment_prep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: npm install 
+        run: npm install  
+      - name: lint
+        run: npm run lint
+      - name: build
+        run: npm run build
+  deploy:
+    name: Deploy app
+    needs: [deployment_prep]
+    runs-on: ubuntu-latest
+    if: |
+      ${{ github.event_name == 'push' }} &&
+      !contains(join(toJson(github.event.commits.*.message), ' '), '#skip')
+    steps:
+      - uses: actions/checkout@v3
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: flyctl deploy --remote-only
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  tag_release:
+    needs: [deploy]
+    permissions: write-all
+    runs-on: ubuntu-latest
+    if: |
+      ${{ github.event_name == 'push' }} &&
+      !contains(join(toJson(github.event.commits.*.message), ' '), '#skip')
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: '0'
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@eca2b69f9e2c24be7decccd0f15fdb1ea5906598
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
