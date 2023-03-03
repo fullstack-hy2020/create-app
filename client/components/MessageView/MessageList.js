@@ -21,5 +21,4 @@ const MessageList = ({ messages, deleteMessage }) => {
   )
 }
 
-
 export default MessageList
